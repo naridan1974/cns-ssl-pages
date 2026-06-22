@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识库·世界杯 ｜ 赛事查询与对照</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.65;
+            color: #1e293b;
+            padding: 2rem 1.2rem;
+        }
+
+        .page {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        /* 头部标记区 */
+        .hero {
+            background: #ffffff;
+            border-radius: 22px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+            padding: 2.2rem 2rem;
+            margin-bottom: 2.4rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #0b1e33;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .sub {
+            font-size: 1rem;
+            color: #475569;
+            border-left: 3px solid #94a3b8;
+            padding-left: 0.9rem;
+            margin-top: 0.2rem;
+        }
+
+        /* 目录式网格 —— 知识库入口感 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.6rem;
+            margin-bottom: 2.2rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+            padding: 1.6rem 1.5rem;
+            border: 1px solid #e9edf2;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.9rem;
+            color: #1e293b;
+            border-bottom: 1px dashed #d1d9e6;
+            padding-bottom: 0.4rem;
+        }
+
+        .card p, .card li {
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card ul li {
+            padding: 0.3rem 0 0.3rem 1.2rem;
+            position: relative;
+        }
+
+        .card ul li::before {
+            content: "·";
+            position: absolute;
+            left: 0.15rem;
+            color: #7c8ba0;
+            font-weight: bold;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #eef2f6;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #2c3e50;
+            margin-right: 0.3rem;
+            border: 1px solid #dce1e9;
+        }
+
+        .info-row {
+            background: #ffffff;
+            border-radius: 18px;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem 1.8rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.6rem 1.2rem;
+        }
+
+        .info-row .label {
+            font-weight: 500;
+            color: #1e293b;
+            min-width: 4.2rem;
+        }
+
+        .info-row .value {
+            color: #3b4b62;
+        }
+
+        .faq-mini {
+            background: #ffffff;
+            border-radius: 18px;
+            border: 1px solid #e2e8f0;
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 2.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .faq-mini h3 {
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #0f263b;
+        }
+
+        .faq-item {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #edf1f7;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-q {
+            font-weight: 500;
+            color: #1e293b;
+            margin-bottom: 0.15rem;
+        }
+
+        .faq-a {
+            color: #475569;
+            font-size: 0.92rem;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #5f6f82;
+            background: #eef1f5;
+            padding: 0.9rem 1.4rem;
+            border-radius: 40px;
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #dbe0e8;
+        }
+
+        .footer-note a {
+            color: #1e3a5f;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted #8f9eb1;
+        }
+
+        .footer-note a:hover {
+            border-bottom: 1px solid #1e3a5f;
+        }
+
+        .inline-link {
+            color: #1d4a6e;
+            text-decoration: none;
+            font-weight: 450;
+            border-bottom: 1px dotted #b3c2d4;
+        }
+
+        .inline-link:hover {
+            border-bottom: 1px solid #1d4a6e;
+        }
+
+        @media (max-width: 520px) {
+            body { padding: 1rem 0.8rem; }
+            .hero { padding: 1.5rem 1.2rem; }
+            .hero h1 { font-size: 1.6rem; }
+            .grid { grid-template-columns: 1fr; }
+            .info-row { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- hero 简明入口说明 -->
+    <div class="hero">
+        <h1>📘 赛事知识库 · 对照与延伸</h1>
+        <div class="sub">日常查询 · 基础事实 · 查阅指引</div>
+        <p style="margin-top: 1.2rem; color: #2c3f58; max-width: 700px;">
+            本页围绕<a href="https://cns-ssl-worldcup.com" class="inline-link">世界杯</a>赛事体系，整理常用知识分类、档案场景与常见疑问摘要，供读者快速对照与索引。
+            内容保持客观，侧重基础信息与查阅便利性。
+        </p>
+    </div>
+
+    <!-- 目录风格卡片网格 -->
+    <div class="grid">
+        <div class="card">
+            <h2>🏆 赛事基本盘</h2>
+            <ul>
+                <li>历届冠军与举办国对照表</li>
+                <li>赛制演变 & 分组规则简述</li>
+                <li>参赛队伍数量与晋级路径</li>
+                <li>决赛阶段历史数据摘要</li>
+            </ul>
+            <div style="margin-top: 0.8rem;"><span class="tag">对照</span><span class="tag">编年</span></div>
+        </div>
+
+        <div class="card">
+            <h2>📊 记录与统计</h2>
+            <ul>
+                <li>个人进球总数排名（决赛阶段）</li>
+                <li>国家队胜率与出场次数</li>
+                <li>单届进球最多球队 & 球员</li>
+                <li>经典比赛与比分档案</li>
+            </ul>
+            <div style="margin-top: 0.8rem;"><span class="tag">数字</span><span class="tag">纵向对比</span></div>
+        </div>
+
+        <div class="card">
+            <h2>🌍 地域·延伸</h2>
+            <ul>
+                <li>各大洲参赛历史与最佳成绩</li>
+                <li>东道主效应与申办背景</li>
+                <li>相关赛事：女足世界杯 · 青年赛</li>
+                <li>裁判规则与科技辅助演变</li>
+            </ul>
+            <div style="margin-top: 0.8rem;"><span class="tag">拓展</span><span class="tag">背景</span></div>
+        </div>
+
+        <div class="card">
+            <h2>🔍 查询场景</h2>
+            <ul>
+                <li>想快速了解某届冠军 → 对照表</li>
+                <li>想比较两届赛事数据 → 统计档案</li>
+                <li>想延伸阅读规则变更 → 背景页</li>
+                <li>日常核对新闻中赛事说法 → 知识库</li>
+            </ul>
+            <div style="margin-top: 0.8rem;"><span class="tag">索引</span><span class="tag">使用建议</span></div>
+        </div>
+    </div>
+
+    <!-- 相关信息区 简洁横向信息条 -->
+    <div class="info-row">
+        <span class="label">相关条目</span>
+        <span class="value">历届冠军列表 · 决赛比分档案 · 参赛队总览 · 最佳射手 · 主办国记录</span>
+    </div>
+
+    <!-- 提示区 / 说明 -->
+    <div class="info-row" style="background: #f9fafc;">
+        <span class="label">ⓘ 提示</span>
+        <span class="value">本知识库基于公开赛事数据整理，部分记录随官方更新调整。建议交叉核对权威来源。如需了解最新赛事动态，可延伸查阅<a href="https://cns-ssl-worldcup.com" class="inline-link">世界杯</a>官方页面所载信息。</span>
+    </div>
+
+    <!-- FAQ 摘要区 延伸阅读感 -->
+    <div class="faq-mini">
+        <h3>📌 常见查询摘要</h3>
+
+        <div class="faq-item">
+            <div class="faq-q">• 哪支球队获得冠军次数最多？</div>
+            <div class="faq-a">根据截至当前周期的决赛阶段数据，巴西队以领先次数位居榜首（5次），德国、意大利各4次紧随其后。具体数量与年份可对照冠军表。</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">• 赛事每几年举办一次？</div>
+            <div class="faq-a">男子世界杯每四年举办一届，期间穿插资格赛。女足世界杯同样四年一届，但举办年份错开。</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">• 哪里可以查到单届射手榜？</div>
+            <div class="faq-a">知识库统计区内收录了历届金靴得主及进球数，同时备注了并列情况。如需每场详细数据，可参考赛事官方记录。</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">• 赛制主要变化有哪些？</div>
+            <div class="faq-a">早期采用淘汰赛+小组循环混合形式，1982年后扩军至24队，1998年增至32队，2026年起将扩展为48队。附加赛规则亦有微调。</div>
+        </div>
+
+        <div style="margin-top: 0.8rem; font-size: 0.9rem; color: #4b657f;">
+            <span>更多问答与延伸阅读，可参考知识库对应分区。</span>
+        </div>
+    </div>
+
+    <!-- 底部自然包含链接，不出现“进入/点击”等词 -->
+    <div class="footer-note">
+        内容索引基于公开资料整理 · 如需核实具体条目，可参考 <a href="https://cns-ssl-worldcup.com">世界杯</a> 相关页面
+    </div>
+
+</div>
+</body>
+</html>
